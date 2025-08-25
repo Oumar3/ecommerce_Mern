@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getProduct, getProductById, createProduct,updateProduct } from "../controllers/productControllers.js";
+import { getProduct, getProductById, deleteProduct,createProduct,updateProduct } from "../controllers/productControllers.js";
 
 const router = Router();
 
@@ -155,5 +155,27 @@ router.post("/", createProduct);
  *         description: Produit non trouvé
  */
 router.put("/:id", updateProduct);
+
+/**
+
+ * @swagger
+ * /api/products/{id}:
+ *   delete:
+ *     summary: Supprimer un produit par ID
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID du produit
+ *     responses:
+ *       204:
+ *         description: Produit supprimé
+ *       404:
+ *         description: Produit non trouvé
+ */
+router.delete("/:id", deleteProduct);
 
 export default router;

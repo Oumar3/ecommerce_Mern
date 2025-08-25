@@ -7,11 +7,11 @@ const UserSchema = new Schema({
     },
     'firstname': {
         type: String,
-        required: true
+        required: false
     },
     "lastname": {
         type: String,
-        required: true
+        required: false
     },
     "email": {
         type: String,
@@ -24,7 +24,7 @@ const UserSchema = new Schema({
     },
     "avatar": {
         type: String,
-        required: true
+        required: false
     },
     "createdAt": {
         type: Date,
