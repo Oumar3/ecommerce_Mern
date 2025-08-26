@@ -29,6 +29,11 @@ const router = Router();
  *         - name
  *         - email
  *         - password
+ *       example:
+ *         id: "1"
+ *         name: "John Doe"
+ *         email: "john.doe@example.com"
+ *         password: "securepassword"
  */
 
 
