@@ -14,6 +14,7 @@ import userRoutes from "./routes/userRoutes.js";
 const app = express();
 
 app.use(express.json());
+app.use(helmet());
 
 // Sécurité HTTP
 // app.use(helmet.contentSecurityPolicy({
