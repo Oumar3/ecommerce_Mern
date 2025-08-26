@@ -8,7 +8,7 @@ import morgan from "morgan";
 import helmet from "helmet";
 import {swaggerUi,swaggerSpec} from "./swagger.js";
 import productRoutes from "./routes/productRoutes.js";
-import userRoutes from "./routes/userRouters.js";
+import userRoutes from "./routes/userRoutes.js";
 
 //initialisation de express
 const app = express();
