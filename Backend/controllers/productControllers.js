@@ -1,22 +1,28 @@
 import mongoose from "mongoose";
-import Product from "../models/Product.js";
+import services from "../services/productService.js";
 
-const getProduct = async(req,res) =>{
+const getProduct = async (req, res) => {
+    let { page, limit, search } = req.query;
+    page = parseInt(page) || 1;
+    limit = parseInt(limit) || 0; // 0 = pas de limite (tous les produits)
+
     try {
-        const products = await Product.find();
-        if(!products || products.length === 0) {
+        let products = await services.getProducts(page, limit, search);
+
+        if (!products || products.length === 0) {
             return res.status(404).json({ message: "No products found" });
         }
+
         res.status(200).json({ message: "Products retrieved successfully", data: products });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-}
+};
 
 const getProductById = async(req,res)=>{
     const id = req.params.id;
     try{
-        const product = await Product.findById(id);
+        const product = await services.getProductById(id);
         if(!product) {
             return res.status(404).json({ message: "Product not found" });
         }
@@ -28,8 +34,7 @@ const getProductById = async(req,res)=>{
 
 const createProduct = async (req, res) => {
     try {
-        const newProduct = new Product({ ...req.body });
-        await newProduct.save();
+        const newProduct = await services.createProduct(req.body);
         res.status(201).json({ message: "Product created successfully", data: newProduct });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -42,7 +47,7 @@ const updateProduct = async (req, res) => {
         if(!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ message: "Invalid product ID" });
         }
-        const updatedProduct = await Product.findByIdAndUpdate(id, { ...req.body }, { new: true });
+        const updatedProduct = await services.updateProduct(id, req.body);
         if (!updatedProduct) {
             return res.status(404).json({ message: "Product not found" });
         }
@@ -58,7 +63,7 @@ const deleteProduct = async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ message: "Invalid product ID" });
         }
-        const deletedProduct = await Product.findByIdAndDelete(id);
+        const deletedProduct = await services.deleteProduct(id);
         if (!deletedProduct) {
             return res.status(404).json({ message: "Product not found" });
         }

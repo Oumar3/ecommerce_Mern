@@ -9,6 +9,7 @@ import helmet from "helmet";
 import {swaggerUi,swaggerSpec} from "./swagger.js";
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import auth from "./middlewares/auth.js";
 
 //initialisation de express
 const app = express();
@@ -35,7 +36,7 @@ app.use(morgan("dev"));
 
 // Middleware de journalisation
 
-app.use('/api/products', productRoutes);
+app.use('/api/products', auth, productRoutes);
 app.use('/api/users', userRoutes);
 
 
